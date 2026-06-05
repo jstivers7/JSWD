@@ -347,7 +347,6 @@
     var mobile=window.innerWidth<768;
     if(mobile&&!mobileCleared){
       els.forEach(function(e){e.style.transform='';e.style.opacity='';e.style.filter='';});
-      if(window.WaterFX&&window.WaterFX.setOccluders)window.WaterFX.setOccluders([]);
       mobileCleared=true;
     }else if(!mobile){mobileCleared=false;}
     var vh=window.innerHeight;
@@ -373,7 +372,7 @@
         els[i].style.opacity=(0.08+0.92*e).toFixed(3);
         els[i].style.filter='blur('+((1-e)*5).toFixed(2)+'px)';
       }
-      if(!mobile&&window.WaterFX&&els[i].__solid){   // no scroll-driven wake on phones (avoids fling jump)
+      if(window.WaterFX&&els[i].__solid){
         var onScreen=r.bottom>0&&r.top<vh;
         // treat surfaced, on-screen elements as solid plates planing on the surface
         if(e>0.9&&onScreen)occList.push({l:r.left+3,t:r.top+3,r:r.right-3,b:r.bottom-3});  // inset so wake can hug the edge
@@ -382,7 +381,7 @@
           var dir=lastDir;                          // +1 = rising (wake below), -1 = sinking (wake above)
           var trailY=(dir>0?r.bottom:r.top)+dir*1;
           var leadY=(dir>0?r.top:r.bottom)-dir*1;  // front edge
-          planeWake(r.left, r.right, leadY, trailY, dir, spd);
+          planeWake(r.left, r.right, leadY, trailY, dir, mobile?spd*0.4:spd);  // gentler wake on phones
         }
       }
     }
