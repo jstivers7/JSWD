@@ -178,7 +178,7 @@
   window.addEventListener('touchstart',function(e){
     var tch=e.touches[0];if(!tch)return;
     lastx=tch.clientX;lasty=tch.clientY;lastT=performance.now();held=0;
-    drop(tch.clientX,tch.clientY,26,14,1.4);
+    drop(tch.clientX,tch.clientY,46,16,1.6);
   },{passive:true});
   window.addEventListener('touchmove',function(e){
     var tch=e.touches[0];if(!tch)return;
@@ -186,8 +186,8 @@
     var dx=tch.clientX-lastx,dy=tch.clientY-lasty;
     var speed=Math.min(60,Math.hypot(dx,dy));
     if(gap>140){held=0;}else{held=Math.min(held+1,18);}
-    var t=held/18, width=1.2+t*3.2, power=(20+speed*0.85)*(1-0.6*t);
-    drop(tch.clientX,tch.clientY,power,14,width);
+    var t=held/18, width=1.2+t*3.2, power=(34+speed*1.0)*(1-0.6*t);
+    drop(tch.clientX,tch.clientY,power,16,width);
     lastx=tch.clientX;lasty=tch.clientY;
   },{passive:true});
 
@@ -306,8 +306,9 @@
   // and diverge at 19.5 deg. We stamp fading points along each arm (re-stamped every frame
   // at the object's current position, so it trails the plate as it planes).
   var TAN = Math.tan(30*Math.PI/180);   // divergent half-angle -> ~60 deg V
-  function planeWake(L, R, leadY, trailY, dir, spd){
+  function planeWake(L, R, leadY, trailY, dir, spd, bowMul){
     if(!window.WaterFX)return;
+    bowMul=bowMul||1;                       // dim the bow waves (arms + front line) independently
     var pw=Math.min(spd,40);
     var len=140+pw*7, N=13, gap=2;         // longer arm/tail; grows with speed
     // V arms swept from a set of corners (origin Y), brightness scaled by sc
@@ -315,7 +316,7 @@
       for(var k=1;k<=N;k++){
         var f=k/N, back=gap+len*Math.pow(f,1.7), lat=back*TAN, y=oy+dir*back;  // points cluster near the source
         var rad=0.3+f*1.4;                   // tighter at the source, larger as it diffuses
-        var amp=(34+pw*1.4)*sc*(1-0.82*f)*(1-0.82*f); // bright source, fades along a longer tail
+        var amp=(34+pw*1.4)*sc*bowMul*(1-0.82*f)*(1-0.82*f); // bright source, fades along a longer tail
         var wd=0.6+(1-f)*1.9;                // thick right at the object, tapering out
         window.WaterFX.ripple(L-lat, y, rad, amp, wd);
         window.WaterFX.ripple(R+lat, y, rad, amp, wd);
@@ -323,7 +324,7 @@
     }
     // bow line and bow arms share the same front position so they connect at the corners
     var bowY=leadY-dir*16;
-    window.WaterFX.wakeLine(L, R, bowY, 32+pw*1.6);   // transverse crest across the front
+    window.WaterFX.wakeLine(L, R, bowY, (32+pw*1.6)*bowMul);   // transverse crest across the front
     arms(bowY, 1.0);                                  // arms sweep back from the line's two ends
     // frictional/churning zone: the dragged boundary layer detaches at the back and shears
     // against still water. Lots of small chaotic ripples right behind the plate -> where they
@@ -381,7 +382,7 @@
           var dir=lastDir;                          // +1 = rising (wake below), -1 = sinking (wake above)
           var trailY=(dir>0?r.bottom:r.top)+dir*1;
           var leadY=(dir>0?r.top:r.bottom)-dir*1;  // front edge
-          planeWake(r.left, r.right, leadY, trailY, dir, mobile?spd*0.4:spd);  // gentler wake on phones
+          planeWake(r.left, r.right, leadY, trailY, dir, mobile?spd*0.4:spd, mobile?0.45:1);  // gentler + dimmer bow on phones
         }
       }
     }
