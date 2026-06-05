@@ -244,9 +244,10 @@ footer{border-top:1px solid rgba(28,174,255,.14);padding:46px 0 40px;color:var(-
 /* Phones */
 @media(max-width:600px){
   .wrap{padding:0 18px}
-  .nav{height:64px}
-  .nav img{height:43px}   /* ~32% wider logo on mobile */
-  .nav ul{top:64px}
+  .nav{height:78px;align-items:center}   /* taller bar adds padding above the logo */
+  .nav img{height:43px;display:block}    /* ~32% wider logo on mobile */
+  .nav-toggle{align-self:center}         /* keep hamburger centered to the logo */
+  .nav ul{top:78px}
   .hero{padding:120px 0 64px}
   .hero.short{padding:120px 0 44px}
   section.block{padding:60px 0}
