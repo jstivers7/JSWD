@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeannie Stivers Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#001631;
+    --navy-2:#04223f;
+    --blue:#1CAEFF;
+    --magenta:#D946C2;
+    --purple:#986FC9;
+    --ink:#eaf3ff;
+    --muted:#9fb6cf;
+    --grad:linear-gradient(100deg,#1CAEFF 0%,#986FC9 50%,#D946C2 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:86px}
+  body{
+    font-family:'Raleway',system-ui,-apple-system,sans-serif;
+    background:var(--navy);
+    color:var(--ink);
+    line-height:1.6;
+    position:relative;
+  }
+  h1,h2,h3,.btn,.eyebrow,.kicker,.nav ul,.card .price{font-family:'Poppins',sans-serif}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+
+  /* NAV */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background .3s ease,backdrop-filter .3s ease,border-color .3s ease;
+  }
+  header.scrolled{
+    background:rgba(0,16,33,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(28,174,255,.16);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .nav img{height:42px;width:auto}
+  .nav ul{display:flex;gap:34px;list-style:none;font-weight:500;font-size:.96rem}
+  .nav ul a{color:var(--muted);transition:color .2s}
+  .nav ul a:hover{color:var(--blue)}
+  .btn{
+    display:inline-block;padding:13px 26px;border-radius:40px;
+    font-weight:600;font-size:.95rem;cursor:pointer;border:none;
+    background:var(--grad);color:#fff;
+    box-shadow:0 6px 22px rgba(217,70,194,.28);
+    transition:transform .2s,box-shadow .2s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(28,174,255,.4)}
+  .btn.ghost{background:transparent;border:1.5px solid rgba(28,174,255,.5);box-shadow:none;color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--magenta);background:rgba(217,70,194,.08)}
+
+  /* HAMBURGER */
+  .nav-toggle{
+    display:none;flex-direction:column;justify-content:center;gap:5px;
+    width:32px;height:30px;background:none;border:none;cursor:pointer;padding:0;
+  }
+  .nav-toggle span{display:block;height:2.5px;width:100%;background:var(--ink);border-radius:2px;transition:transform .3s ease,opacity .2s ease}
+  .nav-toggle.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .nav-toggle.open span:nth-child(2){opacity:0}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+  /* RIPPLING WATER BACKGROUND */
+  #water{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+  section,footer{position:relative;z-index:1}
+
+  /* HERO */
+  .hero{position:relative;padding:170px 0 120px;text-align:center}
+  .hero .inner{position:relative;z-index:2}
+  .eyebrow{
+    display:inline-block;letter-spacing:.18em;text-transform:uppercase;
+    font-size:.74rem;font-weight:600;color:var(--blue);
+    border:1px solid rgba(28,174,255,.3);border-radius:30px;padding:7px 16px;margin-bottom:26px;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem,5.2vw,4rem);line-height:1.12;font-weight:600;
+    letter-spacing:-.01em;margin-bottom:22px;
+  }
+  .hero h1 .accent{
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{max-width:640px;margin:0 auto 38px;font-size:1.18rem;color:var(--muted)}
+  .hero .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .platforms{margin-top:58px;color:var(--muted);font-size:.85rem;letter-spacing:.04em}
+  .platforms strong{color:var(--ink);font-weight:600}
+
+  /* SECTION SHARED */
+  section.block{padding:96px 0}
+  .sec-head{text-align:center;max-width:680px;margin:0 auto 56px}
+  .sec-head h2{font-size:clamp(1.9rem,3.6vw,2.6rem);font-weight:600;letter-spacing:-.01em;margin-bottom:14px}
+  .sec-head p{color:var(--muted);font-size:1.08rem}
+  .kicker{color:var(--magenta);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:.76rem;display:block;margin-bottom:12px}
+
+  /* SERVICES CARDS */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{
+    background:var(--navy-2);border:1px solid rgba(152,111,201,.22);
+    border-radius:18px;padding:34px 30px;transition:transform .25s,border-color .25s,box-shadow .25s;
+    position:relative;overflow:hidden;
+  }
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--grad);opacity:.85}
+  .card:hover{transform:translateY(-7px);border-color:rgba(28,174,255,.55);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+  .card h3{font-size:1.4rem;margin-bottom:6px;font-weight:600}
+  .card .for{color:var(--blue);font-size:.86rem;font-weight:500;margin-bottom:16px}
+  .card p{color:var(--muted);font-size:.97rem;margin-bottom:22px}
+  .card .price{font-size:.92rem;color:var(--ink);font-weight:600}
+  .card .price span{color:var(--muted);font-weight:400}
+  .center-cta{text-align:center;margin-top:46px}
+
+  /* WORK */
+  .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .work-item{
+    border-radius:16px;height:230px;position:relative;overflow:hidden;
+    display:flex;align-items:flex-end;padding:24px;
+    border:1px solid rgba(28,174,255,.18);
+  }
+  .work-item.w1{background:linear-gradient(160deg,#04223f,#0a3a6b)}
+  .work-item.w2{background:linear-gradient(160deg,#2a1640,#5a2c7a)}
+  .work-item.w3{background:linear-gradient(160deg,#0a2a4a,#3a1f55)}
+  .work-item span{position:relative;z-index:2;font-weight:600}
+  .work-item small{display:block;color:var(--muted);font-weight:400;font-size:.82rem;margin-top:3px}
+
+  /* TESTIMONIAL */
+  .quote{
+    max-width:820px;margin:0 auto;text-align:center;
+    background:var(--navy-2);border:1px solid rgba(152,111,201,.22);
+    border-radius:22px;padding:54px 44px;
+  }
+  .quote p{font-size:1.45rem;font-weight:500;line-height:1.5;margin-bottom:22px}
+  .quote .who{color:var(--blue);font-weight:600;font-size:.95rem}
+
+  /* CTA BAND */
+  .cta-band{text-align:center;background:var(--grad);border-radius:26px;padding:66px 40px;margin:40px 0}
+  .cta-band h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:600;margin-bottom:14px;color:#fff}
+  .cta-band p{color:rgba(255,255,255,.9);font-size:1.1rem;margin-bottom:30px}
+  .cta-band .btn{background:#001631;box-shadow:0 8px 26px rgba(0,0,0,.3)}
+  .cta-band .btn:hover{background:#04223f}
+
+  /* FOOTER */
+  footer{border-top:1px solid rgba(28,174,255,.14);padding:46px 0 40px;color:var(--muted)}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+  .foot img{height:34px}
+  .foot ul{display:flex;gap:26px;list-style:none;font-size:.92rem}
+  .foot ul a:hover{color:var(--blue)}
+  .foot .copy{width:100%;font-size:.82rem;opacity:.7;padding-top:8px}
+
+  @media(max-width:860px){
+    .nav-toggle{display:flex}
+    .nav-cta{display:none}
+    .nav ul{
+      position:absolute;top:78px;left:0;right:0;
+      flex-direction:column;gap:0;display:none;
+      background:rgba(0,16,33,.97);backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(28,174,255,.16);
+      padding:6px 0;
+    }
+    .nav ul.open{display:flex}
+    .nav ul li{width:100%}
+    .nav ul a{display:block;padding:15px 28px;font-size:1.05rem}
+    .cards,.work-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="water"></canvas>
+
+<header>
+  <div class="wrap nav">
+    <img src="JeannieStiversWebDesign Logo wide.png" alt="Jeannie Stivers Web Design">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn nav-cta" href="#contact">Book a call</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap inner">
+    <span class="eyebrow">Bay Area Web Designer</span>
+    <h1>Websites that fit your business —<br><span class="accent">on the right platform, done right.</span></h1>
+    <p>I help small businesses, nonprofits, and creatives get online with a polished, functional site — without the hassle of figuring out the tech alone.</p>
+    <div class="cta-row">
+      <a class="btn" href="#contact">Start your project</a>
+      <a class="btn ghost" href="#work">See my work</a>
+    </div>
+    <div class="platforms">
+      Building across <strong>Squarespace · Webflow · WordPress · Shopify · GitHub Pages · custom code</strong>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">What I build</span>
+      <h2>Three ways to work together</h2>
+      <p>From a fast, clean launch to a fully custom build. Whatever you need, I'll help you pick the right platform for the job.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Launch</h3>
+        <div class="for">Solopreneurs &amp; small businesses</div>
+        <p>A polished, professional site to get you online fast — up to 5 pages, mobile-ready, with basic SEO and a contact form.</p>
+        <div class="price">Starting at $1,800 <span>· ~1 week</span></div>
+      </div>
+      <div class="card">
+        <h3>Growth</h3>
+        <div class="for">Growing businesses &amp; nonprofits</div>
+        <p>A bigger, more capable build with the pages and features you need — blog, forms, e-commerce or donations, and room to expand.</p>
+        <div class="price">Starting at $3,500 <span>· 2–4 weeks</span></div>
+      </div>
+      <div class="card">
+        <h3>Custom</h3>
+        <div class="for">One-of-a-kind projects</div>
+        <p>Fully custom design and development with animation, interactivity, and complex integrations — built to stand out.</p>
+        <div class="price">Price on request</div>
+      </div>
+    </div>
+    <div class="center-cta"><a class="btn ghost" href="#services">View all services →</a></div>
+  </div>
+</section>
+
+<section class="block" id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Selected work</span>
+      <h2>Sites I've designed &amp; built</h2>
+      <p>A range of projects across platforms — from clean marketing sites to custom interactive builds.</p>
+    </div>
+    <div class="work-grid">
+      <div class="work-item w1"><span>Santé Global<small>Nonprofit homepage · custom build</small></span></div>
+      <div class="work-item w2"><span>Children's Book Author<small>Illustration-driven site</small></span></div>
+      <div class="work-item w3"><span>Drum Revolution<small>Arts organization site</small></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="quote">
+      <p>"A short testimonial goes here — something a happy client said about working with you and the result you delivered."</p>
+      <div class="who">— Client Name, Organization</div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="contact">
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>Ready to build something?</h2>
+      <p>Not sure where you fit? Let's figure it out together — book a free discovery call.</p>
+      <a class="btn" href="#contact">Book a free consultation</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <img src="JeannieStiversWebDesign Logo wide.png" alt="Jeannie Stivers Web Design">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="copy">© 2026 Jeannie Stivers Web Design · Bay Area, California</div>
+  </div>
+</footer>
+
+<script>
+/* Shiny dark water that ripples where the cursor moves */
+(function(){
+  var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var canvas=document.getElementById('water'),ctx=canvas.getContext('2d');
+  var SCALE=2;                 // simulation runs at half resolution for performance
+  var W,H,sw,sh,cur,prev,src,out,off,offCtx,particles=[];
+  var pcolors=['rgba(255,255,255,','rgba(150,111,255,','rgba(28,174,255,','rgba(217,70,194,'];
+  function initParticles(){
+    var n=Math.round(W*H/26000);
+    particles=[];
+    for(var i=0;i<n;i++){
+      particles.push({x:Math.random()*W,y:Math.random()*H,
+        vx:(Math.random()-0.5)*0.12,vy:(Math.random()-0.5)*0.12,
+        r:Math.random()*1.6+0.6,a:Math.random()*0.4+0.35,
+        sp:Math.random()*0.02+0.006,ph:Math.random()*Math.PI*2,
+        col:pcolors[Math.floor(Math.random()*pcolors.length)]});
+    }
+  }
+
+  function buildSource(){
+    // dark, shiny water base painted once, then refracted by the ripple field
+    off=document.createElement('canvas');off.width=sw;off.height=sh;
+    offCtx=off.getContext('2d');
+    var g=offCtx.createLinearGradient(0,0,0,sh);
+    g.addColorStop(0,'#002a52');
+    g.addColorStop(0.5,'#001631');
+    g.addColorStop(1,'#000c1d');
+    offCtx.fillStyle=g;offCtx.fillRect(0,0,sw,sh);
+    // soft colored sheens for a shiny look
+    function sheen(x,y,r,col,a){
+      var rg=offCtx.createRadialGradient(x,y,0,x,y,r);
+      rg.addColorStop(0,col);rg.addColorStop(1,'rgba(0,0,0,0)');
+      offCtx.globalAlpha=a;offCtx.fillStyle=rg;offCtx.fillRect(0,0,sw,sh);
+    }
+    sheen(sw*0.22,sh*0.18,sw*0.40,'#1CAEFF',0.18);
+    sheen(sw*0.80,sh*0.30,sw*0.42,'#986FC9',0.16);
+    sheen(sw*0.55,sh*0.78,sw*0.46,'#D946C2',0.12);
+    sheen(sw*0.10,sh*0.85,sw*0.34,'#1CAEFF',0.10);
+    offCtx.globalAlpha=1;
+    src=offCtx.getImageData(0,0,sw,sh).data;
+    out=ctx.createImageData(sw,sh);
+  }
+
+  function size(){
+    W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;
+    canvas.style.width=W+'px';canvas.style.height=H+'px';
+    sw=Math.ceil(W/SCALE);sh=Math.ceil(H/SCALE);
+    cur=new Float32Array(sw*sh);prev=new Float32Array(sw*sh);
+    buildSource();initParticles();
+  }
+
+  function drawParticles(t){
+    for(var i=0;i<particles.length;i++){var p=particles[i];
+      if(!reduce){p.x+=p.vx;p.y+=p.vy;}
+      if(p.x<-4)p.x=W+4;else if(p.x>W+4)p.x=-4;
+      if(p.y<-4)p.y=H+4;else if(p.y>H+4)p.y=-4;
+      // bob with the ripple field beneath the particle
+      var sx=Math.round(p.x/SCALE),sy=Math.round(p.y/SCALE),ox=0,oy=0;
+      if(sx>1&&sy>1&&sx<sw-1&&sy<sh-1){var i2=sy*sw+sx;
+        ox=(prev[i2-1]-prev[i2+1])*0.6;oy=(prev[i2-sw]-prev[i2+sw])*0.6;}
+      ctx.beginPath();
+      ctx.fillStyle=p.col+p.a+')';
+      ctx.shadowColor=p.col+'1)';ctx.shadowBlur=6;
+      ctx.arc(p.x+ox,p.y+oy,p.r,0,Math.PI*2);ctx.fill();
+    }
+    ctx.shadowBlur=0;
+  }
+
+  function drop(x,y,power,radius,width){
+    x=Math.round(x/SCALE);y=Math.round(y/SCALE);
+    radius=radius||10;                       // ripple starts as a thin ring of this diameter
+    width=width||1.6;                        // ring thickness: small = crisp, large = blurry
+    var rr=Math.ceil(radius+width+1);
+    if(x<rr+1||y<rr+1||x>=sw-rr-1||y>=sh-rr-1)return;
+    for(var dy=-rr;dy<=rr;dy++){
+      for(var dx=-rr;dx<=rr;dx++){
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        var off=Math.abs(dist-radius);
+        if(off>width)continue;
+        var f=Math.cos(off/width*Math.PI*0.5);   // peak on the ring line, fading to its edges
+        prev[(y+dy)*sw+(x+dx)]-=power*f;
+      }
+    }
+  }
+
+  // cursor-driven ripples: first touch is crisp, trailing ripples get softer & blurrier
+  var lastx=-1,lasty=-1,lastT=0,held=0;
+  window.addEventListener('mousemove',function(e){
+    var now=performance.now(),gap=now-lastT;lastT=now;
+    var dx=e.clientX-lastx,dy=e.clientY-lasty;
+    var speed=Math.min(60,Math.hypot(dx,dy));
+    if(gap>140){held=0;}else{held=Math.min(held+1,18);}  // sustained drag builds up
+    var t=held/18;                                        // 0 = fresh & sharp, 1 = long drag
+    var width=1.2+t*3.2;                                  // crisp -> progressively blurry
+    var power=(14+speed*0.7)*(1-0.6*t);                   // fresh ripples hit harder
+    drop(e.clientX,e.clientY,power,14,width);
+    lastx=e.clientX;lasty=e.clientY;
+  },{passive:true});
+
+  var damping=0.985;   // higher = ripples travel farther across the screen
+  function step(){
+    for(var y=1;y<sh-1;y++){
+      var row=y*sw;
+      for(var x=1;x<sw-1;x++){
+        var i=row+x;
+        var v=(prev[i-1]+prev[i+1]+prev[i-sw]+prev[i+sw])*0.5-cur[i];
+        cur[i]=v*damping;
+      }
+    }
+    var tmp=prev;prev=cur;cur=tmp;
+  }
+
+  function render(){
+    var d=out.data,s=src,wt=reduce?0:frame*0.007;
+    for(var y=1;y<sh-1;y++){
+      var row=y*sw;
+      for(var x=1;x<sw-1;x++){
+        var i=row+x;
+        // gentle ever-present swell so the surface is never perfectly still
+        var swell=Math.sin(x*0.011+y*0.008+wt)*3.4+Math.sin(x*0.006-y*0.013+wt*0.7)*2.6;
+        var rx=(prev[i-1]-prev[i+1]),ry=(prev[i-sw]-prev[i+sw]); // ripple slopes
+        var xo=rx+swell,yo=ry+swell*0.7;  // refraction sampling (ripples + swell)
+        var sx=x+(xo|0),sy=y+(yo|0);
+        if(sx<0)sx=0;else if(sx>=sw)sx=sw-1;
+        if(sy<0)sy=0;else if(sy>=sh)sy=sh-1;
+        var si=(sy*sw+sx)*4,di=i*4;
+        var spec=Math.abs(rx+ry)*2.6;      // ripple glint (kept dim)
+        var spec2=spec*spec*0.03;
+        var swh=Math.abs(swell)*2.4;       // bright crests along the swell edges
+        var hi=spec+spec2+swh;
+        d[di]  =Math.min(255,s[si]  +hi*0.55);   // R
+        d[di+1]=Math.min(255,s[si+1]+hi*0.32);   // G (kept low for purple)
+        d[di+2]=Math.min(255,s[si+2]+hi*1.00);   // B (boosted for purple)
+        d[di+3]=255;
+      }
+    }
+    // replicate edge pixels so the uninitialized 1px border doesn't fringe when upscaled
+    for(var ex=0;ex<sw;ex++){
+      var top=(sw+ex)*4,t0=ex*4,bot=((sh-2)*sw+ex)*4,b0=((sh-1)*sw+ex)*4;
+      d[t0]=d[top];d[t0+1]=d[top+1];d[t0+2]=d[top+2];d[t0+3]=255;
+      d[b0]=d[bot];d[b0+1]=d[bot+1];d[b0+2]=d[bot+2];d[b0+3]=255;
+    }
+    for(var ey=0;ey<sh;ey++){
+      var lf=(ey*sw+1)*4,l0=(ey*sw)*4,rt=(ey*sw+sw-2)*4,r0=(ey*sw+sw-1)*4;
+      d[l0]=d[lf];d[l0+1]=d[lf+1];d[l0+2]=d[lf+2];d[l0+3]=255;
+      d[r0]=d[rt];d[r0+1]=d[rt+1];d[r0+2]=d[rt+2];d[r0+3]=255;
+    }
+    offCtx.putImageData(out,0,0);
+    ctx.imageSmoothingEnabled=true;
+    ctx.drawImage(off,0,0,sw,sh,0,0,W,H);
+  }
+
+  var frame=0;
+  function loop(){
+    // occasional ambient drops so the water is never perfectly still
+    if(!reduce && frame%70===0){drop(Math.random()*W,Math.random()*H,12,16,1.6);}
+    step();render();drawParticles(performance.now());frame++;
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize',size);
+  window.addEventListener('load',size);
+  size();
+  if(reduce){render();drawParticles(0);}else{requestAnimationFrame(loop);}
+})();
+</script>
+<script>
+/* Opaque nav background once the page is scrolled */
+(function(){
+  var h=document.querySelector('header');
+  function onScroll(){h.classList.toggle('scrolled',window.scrollY>40);}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+
+/* Mobile hamburger menu */
+(function(){
+  var btn=document.querySelector('.nav-toggle'),menu=document.querySelector('.nav ul');
+  if(!btn||!menu)return;
+  function setOpen(open){
+    btn.classList.toggle('open',open);
+    menu.classList.toggle('open',open);
+    btn.setAttribute('aria-expanded',open?'true':'false');
+  }
+  btn.addEventListener('click',function(){setOpen(!menu.classList.contains('open'));});
+  menu.addEventListener('click',function(e){if(e.target.tagName==='A')setOpen(false);});
+})();
+</script>
+</body>
+</html>

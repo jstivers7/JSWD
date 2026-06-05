@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Jeannie Stivers Web Design</title>
+<meta name="description" content="Get in touch with Jeannie Stivers Web Design to start your project or book a free discovery call.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<canvas id="water"></canvas>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html"><img src="JeannieStiversWebDesign Logo wide.png" alt="Jeannie Stivers Web Design"></a>
+    <ul>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <a class="btn nav-cta" href="contact.html">Book a call</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero short">
+  <div class="wrap inner">
+    <span class="eyebrow">Contact</span>
+    <h1>Let's build something<br><span class="accent">together.</span></h1>
+    <p>Tell me a little about your project and I'll get back to you within a couple of business days. Prefer to talk it through? Book a free discovery call.</p>
+  </div>
+</section>
+
+<section class="block tight">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Get in touch</h3>
+        <p>Whether you know exactly what you need or you're just starting to think about a website, I'm happy to help you figure out the right next step.</p>
+        <span class="detail"><strong>Location</strong>San Francisco Bay Area, California</span>
+        <span class="detail"><strong>Availability</strong>Currently taking on new projects</span>
+      </div>
+
+      <!-- Netlify form: deploy on Netlify to receive submissions automatically -->
+      <form class="contact" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+        <input type="hidden" name="form-name" value="contact">
+        <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="project">Project type</label>
+          <select id="project" name="project">
+            <option>Launch — new small site</option>
+            <option>Growth — larger build</option>
+            <option>Custom — fully custom project</option>
+            <option>Redesign or migration</option>
+            <option>Add-on or maintenance</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Tell me about your project</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="block tight">
+  <div class="wrap">
+    <div class="quote">
+      <p>"I wasn't quite sure what I wanted or needed, but in no time at all Jeannie grasped the look and feel I was hoping for and pulled together a smashing redesign that added a whole new level of functionality and accessibility to my site. Personable, unflappable, and always professional."</p>
+      <div class="who">— Elizabeth Percer, Author</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a href="index.html"><img src="JeannieStiversWebDesign Logo wide.png" alt="Jeannie Stivers Web Design"></a>
+    <ul>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="copy"><span>© 2026 Jeannie Stivers Web Design · Bay Area, California</span><span class="credit">Designed and Built by Jeannie Stivers Web Design</span></div>
+  </div>
+</footer>
+
+<script src="water.js"></script>
+</body>
+</html>
