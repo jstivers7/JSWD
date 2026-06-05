@@ -245,7 +245,7 @@ footer{border-top:1px solid rgba(28,174,255,.14);padding:46px 0 40px;color:var(-
 @media(max-width:600px){
   .wrap{padding:0 18px}
   .nav{height:64px}
-  .nav img{height:37px}   /* ~15% wider logo on mobile */
+  .nav img{height:43px}   /* ~32% wider logo on mobile */
   .nav ul{top:64px}
   .hero{padding:120px 0 64px}
   .hero.short{padding:120px 0 44px}
