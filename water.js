@@ -384,14 +384,12 @@
     }
     if(window.WaterFX&&window.WaterFX.setOccluders)window.WaterFX.setOccluders(occList);
   }
-  var ticking=false;
-  function onScroll(){
-    if(!ticking){ticking=true;requestAnimationFrame(function(){update();ticking=false;});}
-  }
-  window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('resize',onScroll);
-  window.addEventListener('load',function(){lastScroll=window.scrollY;onScroll();});
-  lastScroll=window.scrollY;update();
+  // Sample scroll position every frame (not per scroll event) so the delta stays smooth —
+  // mobile fires scroll events in bursts, which made the wake lurch and reset.
+  function tick(){update();requestAnimationFrame(tick);}
+  window.addEventListener('resize',function(){lastScroll=window.scrollY;});
+  window.addEventListener('load',function(){lastScroll=window.scrollY;});
+  lastScroll=window.scrollY;requestAnimationFrame(tick);
 })();
 
 /* Mobile hamburger menu */
