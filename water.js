@@ -347,6 +347,7 @@
     var mobile=window.innerWidth<768;
     if(mobile&&!mobileCleared){
       els.forEach(function(e){e.style.transform='';e.style.opacity='';e.style.filter='';});
+      if(window.WaterFX&&window.WaterFX.setOccluders)window.WaterFX.setOccluders([]);
       mobileCleared=true;
     }else if(!mobile){mobileCleared=false;}
     var vh=window.innerHeight;
@@ -372,7 +373,7 @@
         els[i].style.opacity=(0.08+0.92*e).toFixed(3);
         els[i].style.filter='blur('+((1-e)*5).toFixed(2)+'px)';
       }
-      if(window.WaterFX&&els[i].__solid){
+      if(!mobile&&window.WaterFX&&els[i].__solid){   // no scroll-driven wake on phones (avoids fling jump)
         var onScreen=r.bottom>0&&r.top<vh;
         // treat surfaced, on-screen elements as solid plates planing on the surface
         if(e>0.9&&onScreen)occList.push({l:r.left+3,t:r.top+3,r:r.right-3,b:r.bottom-3});  // inset so wake can hug the edge
