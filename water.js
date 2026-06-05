@@ -168,10 +168,27 @@
     var speed=Math.min(60,Math.hypot(dx,dy));
     if(gap>140){held=0;}else{held=Math.min(held+1,18);}
     var t=held/18;
-    var width=1.2+t*3.2;
+    var width=0.9+t*1.6;
     var power=(20+speed*0.85)*(1-0.6*t);
-    drop(e.clientX,e.clientY,power,14,width);
+    drop(e.clientX,e.clientY,power,11,width);
     lastx=e.clientX;lasty=e.clientY;
+  },{passive:true});
+
+  // touch ripples for mobile (no cursor): a crisp ripple on tap, a trailing one on drag
+  window.addEventListener('touchstart',function(e){
+    var tch=e.touches[0];if(!tch)return;
+    lastx=tch.clientX;lasty=tch.clientY;lastT=performance.now();held=0;
+    drop(tch.clientX,tch.clientY,26,14,1.4);
+  },{passive:true});
+  window.addEventListener('touchmove',function(e){
+    var tch=e.touches[0];if(!tch)return;
+    var now=performance.now(),gap=now-lastT;lastT=now;
+    var dx=tch.clientX-lastx,dy=tch.clientY-lasty;
+    var speed=Math.min(60,Math.hypot(dx,dy));
+    if(gap>140){held=0;}else{held=Math.min(held+1,18);}
+    var t=held/18, width=1.2+t*3.2, power=(20+speed*0.85)*(1-0.6*t);
+    drop(tch.clientX,tch.clientY,power,14,width);
+    lastx=tch.clientX;lasty=tch.clientY;
   },{passive:true});
 
   var damping=0.972;
@@ -323,8 +340,15 @@
     }
   }
 
-  var lastScroll=window.scrollY;
+  var lastScroll=window.scrollY, mobileCleared=false;
   function update(){
+    // On phones (smaller than tablet) we drop only the visual "surfacing" transform — objects
+    // just glide into view normally — but KEEP the wake ripples in the water.
+    var mobile=window.innerWidth<768;
+    if(mobile&&!mobileCleared){
+      els.forEach(function(e){e.style.transform='';e.style.opacity='';e.style.filter='';});
+      mobileCleared=true;
+    }else if(!mobile){mobileCleared=false;}
     var vh=window.innerHeight;
     var base=vh*0.98, end=vh*0.5;          // all content fully clear once its top reaches 50%
     var span=base-end;
@@ -338,9 +362,13 @@
       var t=(start-r.top)/(start-end);
       if(t<0)t=0;else if(t>1)t=1;
       var e=t*t*(3-2*t);              // smoothstep easing
-      els[i].style.transform='translateY('+((1-e)*80).toFixed(1)+'px) scale('+(0.965+0.035*e).toFixed(3)+')';
-      els[i].style.opacity=(0.08+0.92*e).toFixed(3);
-      els[i].style.filter='blur('+((1-e)*5).toFixed(2)+'px)';
+      if(mobile){
+        e=1;                         // treat as fully surfaced: no rise/blur, but wake still fires
+      }else{
+        els[i].style.transform='translateY('+((1-e)*80).toFixed(1)+'px) scale('+(0.965+0.035*e).toFixed(3)+')';
+        els[i].style.opacity=(0.08+0.92*e).toFixed(3);
+        els[i].style.filter='blur('+((1-e)*5).toFixed(2)+'px)';
+      }
       if(window.WaterFX&&els[i].__solid){
         var onScreen=r.bottom>0&&r.top<vh;
         // treat surfaced, on-screen elements as solid plates planing on the surface
