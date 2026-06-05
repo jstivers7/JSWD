@@ -340,7 +340,7 @@
     }
   }
 
-  var lastScroll=window.scrollY, mobileCleared=false;
+  var lastScroll=window.scrollY, mobileCleared=false, smoothSpd=0, lastDir=1;
   function update(){
     // On phones (smaller than tablet) we drop only the visual "surfacing" transform — objects
     // just glide into view normally — but KEEP the wake ripples in the water.
@@ -353,7 +353,10 @@
     var base=vh*0.98, end=vh*0.5;          // all content fully clear once its top reaches 50%
     var span=base-end;
     var sy=window.scrollY, dy=sy-lastScroll; lastScroll=sy;
-    var spd=Math.min(Math.abs(dy),34);     // wake strength scales with scroll speed (like the cursor)
+    if(Math.abs(dy)>140)dy=0;              // reject momentum-scroll jump frames so the wake can't lurch
+    if(dy>0.5)lastDir=1;else if(dy<-0.5)lastDir=-1;
+    smoothSpd+=(Math.min(Math.abs(dy),34)-smoothSpd)*0.3;  // low-pass so bursts don't spike the wake
+    var spd=smoothSpd;
     var occList=[];
     for(var i=0;i<els.length;i++){
       var r=els[i].getBoundingClientRect();
@@ -375,7 +378,7 @@
         if(e>0.9&&onScreen)occList.push({l:r.left+3,t:r.top+3,r:r.right-3,b:r.bottom-3});  // inset so wake can hug the edge
         // shed a Kelvin-style wake from the trailing edge while the plate moves
         if(spd>0.6&&e>0.94&&onScreen){
-          var dir=dy>0?1:-1;                       // +1 = rising (wake below), -1 = sinking (wake above)
+          var dir=lastDir;                          // +1 = rising (wake below), -1 = sinking (wake above)
           var trailY=(dir>0?r.bottom:r.top)+dir*1;
           var leadY=(dir>0?r.top:r.bottom)-dir*1;  // front edge
           planeWake(r.left, r.right, leadY, trailY, dir, spd);
