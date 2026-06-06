@@ -168,7 +168,8 @@ section.block.tight{padding:60px 0}
     background:linear-gradient(150deg,rgba(28,174,255,.85),rgba(152,111,201,.82) 50%,rgba(217,70,194,.85))}
   .work-item:hover .cap,.work-item:hover .tag{opacity:1}
   .work-item .cap{font-size:1.5rem;padding:26px 28px}
-  .work-item .cap small{color:#eaf3ff;font-size:1rem;margin-top:6px}
+  .work-item .cap{line-height:1.2}
+  .work-item .cap small{color:#eaf3ff;font-size:1rem;margin-top:1px}
   .work-item .tag{background:rgba(0,16,33,.45);color:#fff;border-color:rgba(255,255,255,.5)}
 }
 
