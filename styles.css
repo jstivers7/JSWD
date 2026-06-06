@@ -243,6 +243,9 @@ footer{border-top:1px solid rgba(28,174,255,.14);padding:46px 0 40px;color:var(-
 
 /* Phones */
 @media(max-width:600px){
+  html{font-size:18.5px}   /* larger body text on mobile */
+  .hero p,.sec-head p{font-size:1.08rem}
+  .card p,.card ul.feat li,.about-grid p,.contact-info p,.contact-info .detail,.addon .desc,.step p,.foot ul{font-size:1.02rem;line-height:1.62}
   .wrap{padding:0 18px}
   .nav{height:78px;align-items:center}   /* taller bar adds padding above the logo */
   .nav img{height:43px;display:block}    /* ~32% wider logo on mobile */
@@ -253,7 +256,6 @@ footer{border-top:1px solid rgba(28,174,255,.14);padding:46px 0 40px;color:var(-
   section.block{padding:60px 0}
   section.block.tight{padding:40px 0}
   .sec-head{margin-bottom:36px}
-  .hero p,.sec-head p{font-size:1rem}
   .card{padding:26px 22px}
   .steps{grid-template-columns:1fr;gap:22px}
   .quote{padding:34px 22px}
