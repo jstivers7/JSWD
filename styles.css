@@ -148,9 +148,11 @@ section.block.tight{padding:60px 0}
 /* Touch devices only: blue→pink (left→right) bottom gradient, faded upward via a mask */
 @media(hover:none){
   .work-item::after{
-    background:linear-gradient(to right,rgba(28,174,255,.9) 0%,rgba(152,111,201,.9) 50%,rgba(217,70,194,.9) 100%);
-    -webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.82) 28%,rgba(0,0,0,.4) 52%,transparent 80%);
-    mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.82) 28%,rgba(0,0,0,.4) 52%,transparent 80%);
+    background:
+      linear-gradient(to top,rgba(0,8,20,.55) 0%,rgba(0,8,20,.2) 34%,rgba(0,8,20,0) 60%),
+      linear-gradient(to right,rgba(28,174,255,.98) 0%,rgba(152,111,201,.98) 50%,rgba(217,70,194,.98) 100%);
+    -webkit-mask-image:linear-gradient(to top,#000 0%,#000 30%,rgba(0,0,0,.5) 55%,transparent 82%);
+    mask-image:linear-gradient(to top,#000 0%,#000 30%,rgba(0,0,0,.5) 55%,transparent 82%);
   }
 }
 .work-item .cap{position:absolute;left:0;bottom:0;z-index:2;padding:22px 24px;font-family:'Poppins',sans-serif;font-weight:500}
