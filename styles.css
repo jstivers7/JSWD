@@ -159,6 +159,18 @@ section.block.tight{padding:60px 0}
 .work-item .tag{position:absolute;top:18px;left:18px;z-index:3;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
   background:rgba(0,16,33,.7);border:1px solid rgba(28,174,255,.3);border-radius:20px;padding:4px 12px;color:var(--blue);font-family:'Poppins',sans-serif}
 .work-item span{z-index:2}
+/* On devices with a real pointer: show the clean screenshot, reveal a blue→pink
+   overlay + caption on hover so it's clearly clickable. (Touch devices keep labels.) */
+@media(hover:hover){
+  .work-item::after{opacity:0;transition:opacity .35s ease}
+  .work-item .cap,.work-item .tag{opacity:0;transition:opacity .35s ease}
+  .work-item:hover::after{opacity:1;
+    background:linear-gradient(150deg,rgba(28,174,255,.85),rgba(152,111,201,.82) 50%,rgba(217,70,194,.85))}
+  .work-item:hover .cap,.work-item:hover .tag{opacity:1}
+  .work-item .cap{font-size:1.5rem;padding:26px 28px}
+  .work-item .cap small{color:#eaf3ff;font-size:1rem;margin-top:6px}
+  .work-item .tag{background:rgba(0,16,33,.45);color:#fff;border-color:rgba(255,255,255,.5)}
+}
 
 /* ABOUT */
 .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:54px;align-items:start}
