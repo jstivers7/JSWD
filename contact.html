@@ -62,10 +62,13 @@
         <span class="detail"><strong>Availability</strong>Currently taking on new projects</span>
       </div>
 
-      <!-- Netlify form: deploy on Netlify to receive submissions automatically -->
-      <form class="contact" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
-        <input type="hidden" name="form-name" value="contact">
-        <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+      <!-- Web3Forms: paste your access key below (get one free at https://web3forms.com). Works on any static host. -->
+      <form class="contact" method="POST" action="https://api.web3forms.com/submit">
+        <input type="hidden" name="access_key" value="6a796729-599f-4434-abd2-4257faa5247b">
+        <input type="hidden" name="subject" value="New inquiry from jeanniestiverswebdesign.com">
+        <input type="hidden" name="from_name" value="Jeannie Stivers Web Design">
+        <input type="hidden" name="redirect" value="https://www.jeanniestiverswebdesign.com/thanks.html">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <div class="field">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
