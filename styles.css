@@ -241,6 +241,10 @@ footer{border-top:1px solid rgba(28,174,255,.14);padding:46px 0 40px;color:var(-
 .foot img{height:34px}
 .foot ul{display:flex;gap:26px;list-style:none;font-size:.92rem}
 .foot ul a:hover{color:var(--blue)}
+.foot .social-icon{display:inline-flex;align-items:center;width:20px;height:20px;fill:var(--muted);transition:fill .2s}
+.foot .social-icon:hover{fill:var(--blue)}
+.contact-social{width:24px;height:24px;fill:var(--blue);display:block}
+.contact-social:hover{fill:var(--ink)}
 .foot .copy{width:100%;font-size:.82rem;opacity:.7;padding-top:8px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
 .foot .copy .credit{font-family:'Poppins',sans-serif}
 @media(max-width:560px){.foot .copy{justify-content:center;text-align:center}}
